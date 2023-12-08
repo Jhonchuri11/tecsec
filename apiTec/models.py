@@ -21,18 +21,18 @@ class Calle(models.Model):
 class Comentario(models.Model):
     id_calle = models.ForeignKey(Calle, on_delete=models.CASCADE)
     comentario = models.TextField()
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fechaCreacion = models.DateTimeField(auto_now_add=True)
 
-class Incidente(models.Model):
+class Incidentes(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     latitud = models.DecimalField(max_digits=10, decimal_places=8)
     longitud = models.DecimalField(max_digits=11, decimal_places=8)
     descripcion = models.TextField()
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fechaCcreacion = models.DateTimeField(auto_now_add=True)
     aprobado = models.BooleanField(default=False)
 
-class CallePeligrosa(models.Model):
-    id_calle = models.ForeignKey(Calle, on_delete=models.CASCADE)
+class CallePeligrosas(models.Model):
+    idcalle = models.ForeignKey(Calle, on_delete=models.CASCADE)
     nivel_peligro = models.IntegerField()
 
 
