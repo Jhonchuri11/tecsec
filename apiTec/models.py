@@ -36,11 +36,11 @@ class CallePeligrosas(models.Model):
     nivel_peligro = models.IntegerField()
 
 
-#class Cliente(models.Model):
- #   name = models.CharField(max_length=200)
-  #  email = models.CharField(max_length=200, unique=True)
-   # username = models.CharField(max_length=200, unique=True)
-    #password = models.CharField(max_length=200, unique=True)
+class Clientes(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200, unique=True)
+    username = models.CharField(max_length=200, unique=True)
+    password = models.CharField(max_length=200, unique=True)
 
     
 
