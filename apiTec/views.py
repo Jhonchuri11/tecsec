@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from .serializers import UserSerializer, clienteLoginSerializer, clienteSerializer
 from rest_framework.response import Response
-from .models import User, Cliente
+from .models import User, Clientes
 from rest_framework.exceptions import AuthenticationFailed
 import jwt, datetime
 from rest_framework import generics
@@ -37,7 +37,7 @@ class RegisterUser(generics.CreateAPIView):
 
 # Usando la entidad cliente para registro
 class RegisterClient(generics.CreateAPIView):
-    queryset = Cliente.objects.all()
+    queryset = Clientes.objects.all()
     serializer_class = clienteSerializer
 
     def create(self, request, *args, **kwargs):

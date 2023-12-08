@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Cliente
+from .models import User, Clientes
 
 # Se llama esta funcion make_password para encriptar contraseña
 
@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
     
 class clienteSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Cliente
+        model = Clientes
         fields = ['id', 'name','email','username','password']
 
     def create(self, validated_data):
