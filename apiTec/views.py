@@ -20,7 +20,8 @@ class RegisterView(APIView):
            return Response(response_data, status=201)
         else:
             return Response(serializer.errors, status=400)
-        
+
+# Otra muestra
 class RegisterUser(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -65,7 +66,7 @@ class LoginClient(APIView):
             return Response({'message': 'Inicio de sesión exitoso'}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Credenciales no válidas'}, status=status.HTTP_401_UNAUTHORIZED)
-        
+# Login 
 class LoginView(APIView):
     def post(self, request):
         email = request.data['email']
@@ -87,10 +88,9 @@ class LoginView(APIView):
 
         user_data = {
             'id': user.id,
-            'last_name': user.last_name,
+            'name': user.name,
             'email': user.email,
             'numero': user.numero,
-            'username': user.username,
             'password': user.password
         }
 
@@ -104,7 +104,8 @@ class LoginView(APIView):
             'data': {
                 'user': user_data,
             },
-            'jwt': token
+            'jwt': token,
+            'message': "Inicio de sesión exitoso"
         }
         return response
 
