@@ -1,9 +1,5 @@
 from rest_framework import serializers
-from .models import User, Clientes
-
-# Se llama esta funcion make_password para encriptar contraseña
-
-from django.contrib.auth.hashers import make_password
+from .models import User, Calle, Comentario, Incidentes, CallePeligrosas
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,19 +16,23 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     
-class clienteSerializer(serializers.ModelSerializer):
+class CalleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Clientes
-        fields = ['id', 'name','email','username','password']
+        model = Calle
 
-    def create(self, validated_data):
-        password = validated_data.pop('password', None)
-        instance = self.Meta.model(**validated_data)
-        if password is not None:
-            instance.password = make_password(password) # estamos encriptando contraseña antes de guardar password
-        instance.save()
-        return instance
-    
-class clienteLoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField()
+        fields = ['id','nombres','latitud','longintud','nivelSeguridad']
+
+class ComentariosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comentario
+        fields = ['idCalle','comentario']
+
+class IncidentesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Incidentes
+        fields = ['id','idusuario','latitud','longintud','descripcion','aprobado']
+
+class CallesPeligrosaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CallePeligrosas
+        fields = ['id','nombre','latitud','longintud','descripcion','nivelPeligro']

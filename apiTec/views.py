@@ -1,12 +1,11 @@
 from rest_framework.views import APIView
-from .serializers import UserSerializer, clienteLoginSerializer, clienteSerializer
+from .serializers import UserSerializer, CalleSerializer, ComentariosSerializer, IncidentesSerializer, CallesPeligrosaSerializer
 from rest_framework.response import Response
-from .models import User, Clientes
+from .models import User, Calle, Comentario, Incidentes, CallePeligrosas
 from rest_framework.exceptions import AuthenticationFailed
 import jwt, datetime
 from rest_framework import generics
 from rest_framework import status
-from django.contrib.auth import authenticate, login
 
 class RegisterView(APIView):
     def post(self, request):
@@ -35,37 +34,6 @@ class RegisterUser(generics.CreateAPIView):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED , headers=headers)
 
-# Usando la entidad cliente para registro
-class RegisterClient(generics.CreateAPIView):
-    queryset = Clientes.objects.all()
-    serializer_class = clienteSerializer
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        try:
-            serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer)
-            headers = self.get_success_headers(serializer.data)
-            return Response({'message': 'Cliente creado correctamente'}, status=status.HTTP_201_CREATED, headers=headers)
-        except ValueError as error:
-            return Response({'error': error.detail}, status=status.HTTP_400_BAD_REQUEST)
-
-class LoginClient(APIView):
-    def post(self, request, *args, **kwargs):
-        serializer = clienteLoginSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        email = serializer.validated_data['email']
-        password = serializer.validated_data['password']
-
-        # Autenticar al usuario utilizando tu modelo Cliente
-        user = authenticate(request, email=email, password=password)
-
-        if user:
-            login(request, user)
-            return Response({'message': 'Inicio de sesión exitoso'}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Credenciales no válidas'}, status=status.HTTP_401_UNAUTHORIZED)
 # Login 
 class LoginView(APIView):
     def post(self, request):
@@ -134,5 +102,18 @@ class LogoutView(APIView):
         return response
 
 
+class callesCreate(generics.CreateAPIView):
+    queryset = Calle.objects.all()
+    serializer_class = CalleSerializer
 
+class comentarioCreate(generics.CreateAPIView):
+    queryset = Comentario.objects.all()
+    serializer_class = ComentariosSerializer
 
+class incidenteCreate(generics.CreateAPIView):
+    queryset = Incidentes.objects.all()
+    serializer_class = IncidentesSerializer
+
+class callePeligrosaCreate(generics.CreateAPIView):
+    queryset = CallePeligrosas.objects.all()
+    serializer_class = CallesPeligrosaSerializer

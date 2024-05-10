@@ -12,35 +12,32 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['email']
 
 class Calle(models.Model):
-    nombre = models.CharField(max_length=255)
+    nombres = models.CharField(max_length=255)
     latitud = models.DecimalField(max_digits=10, decimal_places=8)
     longitud = models.DecimalField(max_digits=11, decimal_places=8)
-    nivel_seguridad = models.IntegerField()
+    nivelSeguridad = models.IntegerField()
 
 
 class Comentario(models.Model):
-    id_calle = models.ForeignKey(Calle, on_delete=models.CASCADE)
+    idCalle = models.ForeignKey(Calle, on_delete=models.CASCADE)
     comentario = models.TextField()
     fechaCreacion = models.DateTimeField(auto_now_add=True)
 
 class Incidentes(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    idusuario = models.ForeignKey(User, on_delete=models.CASCADE)
     latitud = models.DecimalField(max_digits=10, decimal_places=8)
     longitud = models.DecimalField(max_digits=11, decimal_places=8)
     descripcion = models.TextField()
-    fechaCcreacion = models.DateTimeField(auto_now_add=True)
     aprobado = models.BooleanField(default=False)
+    fechaCreacion = models.DateTimeField(auto_now_add=True)
 
 class CallePeligrosas(models.Model):
-    idcalle = models.ForeignKey(Calle, on_delete=models.CASCADE)
-    nivel_peligro = models.IntegerField()
+    nombre = models.CharField(max_length=255)
+    latitud = models.DecimalField(max_digits=10, decimal_places=8)
+    longitud = models.DecimalField(max_digits=11, decimal_places=8)
+    descripcion = models.TextField()
+    nivelPeligro = models.IntegerField()
 
-
-class Clientes(models.Model):
-    name = models.CharField(max_length=200)
-    email = models.CharField(max_length=200, unique=True)
-    username = models.CharField(max_length=200, unique=True)
-    password = models.CharField(max_length=200, unique=True)
 
     
 
